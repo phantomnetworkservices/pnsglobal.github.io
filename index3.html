@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Store | Shipping & Policies</title>
+    <!-- Tailwind CSS for clean, modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .chat-window { display: none; }
+        .chat-window.active { display: flex; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-blue-600 tracking-wide flex items-center gap-2">
+                <i class="fa-solid fa-truck-fast"></i> TechMove Logistics
+            </a>
+            <div class="hidden md:flex space-x-6 font-medium text-gray-600">
+                <a href="#calculator" class="hover:text-blue-600 transition">Shipping Calculator</a>
+                <a href="#policies" class="hover:text-blue-600 transition">Store Policies</a>
+                <a href="#contact" class="hover:text-blue-600 transition">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white py-16 px-4 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Premium Devices, Reliable Logistics</h1>
+            <p class="text-lg text-blue-100 mb-8">Transparent shipping rates across Nigeria and straightforward protection for your investments.</p>
+            <a href="#calculator" class="bg-white text-blue-700 font-bold px-6 py-3 rounded-lg shadow-md hover:bg-blue-50 transition">Check Shipping Rates</a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-12 space-y-16">
+
+        <!-- Shipping & Logistics Calculator Section -->
+        <section id="calculator" class="scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold tracking-tight">Logistics & Shipping</h2>
+                <p class="text-gray-500 mt-2">Select your state to instantly find your logistics delivery tier.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <!-- Calculator Card -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 md:col-span-2">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot text-blue-600"></i> Calculate Shipping
+                    </h3>
+                    
+                    <div class="mb-4">
+                        <label for="stateSelect" class="block text-sm font-semibold text-gray-600 mb-2">Delivery Destination State</label>
+                        <select id="stateSelect" onchange="calculateShipping()" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                            <option value="" disabled selected>-- Select your location --</option>
+                            <option value="flat">Abuja (FCT)</option>
+                            <option value="flat">Lagos</option>
+                            <option value="flat">Port Harcourt (Rivers)</option>
+                            <option value="carrier">Abia</option>
+                            <option value="carrier">Adamawa</option>
+                            <option value="carrier">Akwa Ibom</option>
+                            <option value="carrier">Anambra</option>
+                            <option value="carrier">Bauchi</option>
+                            <option value="carrier">Bayelsa</option>
+                            <option value="carrier">Benue</option>
+                            <option value="carrier">Borno</option>
+                            <option value="carrier">Cross River</option>
+                            <option value="carrier">Delta</option>
+                            <option value="carrier">Ebonyi</option>
+                            <option value="carrier">Edo</option>
+                            <option value="carrier">Ekiti</option>
+                            <option value="carrier">Enugu</option>
+                            <option value="carrier">Gombe</option>
+                            <option value="carrier">Imo</option>
+                            <option value="carrier">Jigawa</option>
+                            <option value="carrier">Kaduna</option>
+                            <option value="carrier">Kano</option>
+                            <option value="carrier">Katsina</option>
+                            <option value="carrier">Kebbi</option>
+                            <option value="carrier">Kogi</option>
+                            <option value="carrier">Kwara</option>
+                            <option value="carrier">Nasarawa</option>
+                            <option value="carrier">Niger</option>
+                            <option value="carrier">Ogun</option>
+                            <option value="carrier">Ondo</option>
+                            <option value="carrier">Osun</option>
+                            <option value="carrier">Oyo</option>
+                            <option value="carrier">Plateau</option>
+                            <option value="carrier">Sokoto</option>
+                            <option value="carrier">Taraba</option>
+                            <option value="carrier">Yobe</option>
+                            <option value="carrier">Zamfara</option>
+                        </select>
+                    </div>
+
+                    <!-- Dynamic output area -->
+                    <div id="resultBox" class="hidden p-4 rounded-xl transition-all duration-300">
+                        <p id="resultText" class="font-medium text-lg"></p>
+                    </div>
+                </div>
+
+                <!-- Info Side Panel -->
+                <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-blue-900 mb-2">Shipping Quick-Rules</h4>
+                        <ul class="text-sm text-blue-800 space-y-3">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check mt-1 text-blue-600"></i>
+                                <span><strong>₦7,000 Flat Rate:</strong> Applicable only to Lagos, Abuja, and Port Harcourt.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-info mt-1 text-blue-600"></i>
+                                <span><strong>Other Locations:</strong> Outer regions automatically defer to standard carrier variables based on payload size/weight.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-blue-200 text-xs text-blue-700 font-medium">
+                        Our trusted courier partners ensure secure tracking for every premium device dispatched.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Store Policies Section -->
+        <section id="policies" class="scroll-mt-20 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+            <div class="max-w-3xl mx-auto text-center mb-10">
+                <h2 class="text-3xl font-bold tracking-tight">Returns & Refunds Policy</h2>
+                <p class="text-gray-500 mt-2">Please review our baseline hardware protection terms prior to purchase fulfillment.</p>
+            </div>
+
+            <div class="max-w-2xl mx-auto border-l-4 border-amber-500 bg-amber-50/60 p-6 rounded-r-xl">
+                <div class="flex gap-4">
+                    <div class="text-amber-600 text-2xl"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-amber-900 mb-2">Factory Default Coverage Only</h3>
+                        <p class="text-amber-950 leading-relaxed text-sm">
+                            Returns, replacements, and structural refund claims are strictly limited to **factory defaulted devices**. 
+                            Hardware exhibiting evidence of physical breakage, liquid contamination, or unauthorized opening after delivery cannot be processed for standard return logistics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="scroll-mt-20 max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold tracking-tight">Connect with Support</h2>
+                <p class="text-gray-500 mt-2">Choose your preferred channel for orders or hardware verification queries.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-3 gap-4">
+                <!-- Email -->
+                <a href="mailto:support@techmovelogistics.com" class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-md transition group">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-3 group-hover:bg-blue-600 group-hover:text-white transition">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <span class="font-bold">Email Support</span>
+                    <span class="text-xs text-gray-400 mt-1">support@techmove.com</span>
+                </a>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/2348000000000?text=I'm%20interested%20in%20device%20shipping" target="_blank" class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-md transition group">
+                    <div class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xl mb-3 group-hover:bg-green-600 group-hover:text-white transition">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <span class="font-bold">WhatsApp Business</span>
+                    <span class="text-xs text-gray-400 mt-1">Instant Response Chat</span>
+                </a>
+
+                <!-- Webchat Toggle Button -->
+                <button onclick="toggleChat()" class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-md transition group w-full">
+                    <div class="w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl mb-3 group-hover:bg-indigo-600 group-hover:text-white transition">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <span class="font-bold">Live Webchat</span>
+                    <span class="text-xs text-gray-400 mt-1">Chat directly in-browser</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Webchat Live UI Widget -->
+    <div id="webchatWidget" class="chat-window fixed bottom-6 right-6 w-80 h-96 bg-white shadow-2xl rounded-2xl border border-gray-200 flex-col overflow-hidden z-50">
+        <!-- Header -->
+        <div class="bg-indigo-600 text-white p-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="w-2 py-2 bg-green-400 rounded-full inline-block animate-pulse"></span>
+                <h4 class="font-bold text-sm">Store Webchat Support</h4>
+            </div>
+            <button onclick="toggleChat()" class="text-white hover:text-gray-200"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <!-- Feed -->
+        <div id="chatFeed" class="flex-1 p-4 overflow-y-auto space-y-3 text-sm bg-gray-50">
+            <div class="bg-gray-200 text-gray-800 p-3 rounded-lg rounded-tl-none max-w-[85%]">
+                Hello! Welcome to our store. How can we assist you with our device logistics or returns policies today?
+            </div>
+        </div>
+        <!-- Input -->
+        <div class="p-3 border-t bg-white flex gap-2">
+            <input type="text" id="chatInput" placeholder="Type a response..." class="flex-1 border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-600">
+            <button onclick="sendChatMessage()" class="bg-indigo-600 text-white px-3 rounded-lg hover:bg-indigo-700 transition"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Simple Footer -->
+    <footer class="bg-gray-900 text-gray-400 text-center py-6 mt-16 text-sm border-t border-gray-800">
+        &copy; 2026 TechMove Logistics Store. All rights reserved.
+    </footer>
+
+    <!-- Core Interactive Logic -->
+    <script>
+        // Shipping Logic Handler
+        function calculateShipping() {
+            const select = document.getElementById('stateSelect');
+            const resultBox = document.getElementById('resultBox');
+            const resultText = document.getElementById('resultText');
+            
+            const selectedType = select.value;
+
+            resultBox.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200', 'bg-blue-50', 'text-blue-800', 'border-blue-200');
+
+            if (selectedType === 'flat') {
+                resultBox.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
+                resultText.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i><strong>Flat Rate: ₦7,000</strong> shipping applies to this location.';
+            } else if (selectedType === 'carrier') {
+                resultBox.classList.add('bg-blue-50', 'text-blue-800', 'border', 'border-blue-200');
+                resultText.innerHTML = '<i class="fa-solid fa-circle-info mr-2"></i>Shipping costs to this destination will be <strong>calculated by the carrier</strong> based on package dimension and weight variations.';
+            }
+        }
+
+        // Webchat UI Component Toggle
+        function toggleChat() {
+            const widget = document.getElementById('webchatWidget');
+            widget.classList.toggle('active');
+        }
+
+        // Simulating the Webchat Feed
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const feed = document.getElementById('chatFeed');
+            const msgText = input.value.trim();
+
+            if (msgText === '') return;
+
+            // User block
+            const userBubble = document.createElement('div');
+            userBubble.className = "bg-indigo-600 text-white p-3 rounded-lg rounded-tr-none max-w-[85%] ml-auto text-right";
+            userBubble.textContent = msgText;
+            feed.appendChild(userBubble);
+            
+            input.value = '';
+            feed.scrollTop = feed.scrollHeight;
+
+            // Mocking a live support responder 
+            setTimeout(() => {
+                const automatedReply = document.createElement('div');
+                automatedReply.className = "bg-gray-200 text-gray-800 p-3 rounded-lg rounded-tl-none max-w-[85%]";
+                automatedReply.textContent = "Thank you! An agent is reviewing your message regarding our logistics policies and will reply shortly.";
+                feed.appendChild(automatedReply);
+                feed.scrollTop = feed.scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
